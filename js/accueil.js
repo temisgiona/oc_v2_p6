@@ -49,7 +49,6 @@ class Carousel {
     }
 }
 
-/** class for getting data to bring in the caroussel */
 class carousel_data {
     constructor(carouselName,genderName) {
         this.carouselName = carouselName;
@@ -59,7 +58,11 @@ class carousel_data {
     getData() {
         let carousel_nametest = this.carouselName;
         let gender_name_test = this.genderName;
+
+        //let fetch_word2 ='http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre='+ gender_name_test +'&page_size=10&page=1'
         let fetch_word = `http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=${gender_name_test}&page_size=10&page=1`
+        
+        //fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=action&page_size=10&page=1')
         fetch(fetch_word)
         .then(res => res.json())
         .then(res => res.results)
@@ -91,45 +94,32 @@ class carousel_data {
 /**
  * When DOM loaded 
  */
- let title_categorie_1 =["Action","Action"];
- let title_categorie_2 =["Adult","Adultes"];
- let title_categorie_3 =["Adventure","Aventure"];
- let title_categorie_4 =["Animation","Animation"];
- let title_categorie_5 =["Biography","Biographie"];
 
 window.addEventListener("DOMContentLoaded", (event) => {
     /** Fetch data for each caroussel */
     bestMovieRecorded();
-    /** choose de category to display, 
-     * firt data = html section
-     * second data = category choosen
-     *  */
-    const cat1 = new carousel_data("carousel_cat1", title_categorie_1[0]);
-    const cat2 = new carousel_data("carousel_cat2", title_categorie_4[0]);
-    const cat3 = new carousel_data("carousel_cat3", title_categorie_5[0]);
-
-    //console.log("DOM ok");
+    //new carousel_data("carousel_cat1", "animation").getData();
+    //categorie1();
+    const cat1 = new carousel_data("carousel_cat1", "action");
+    const cat2 = new carousel_data("carousel_cat2", "animation");
+    const cat1 = new carousel_data("carousel_cat3", "biography");
+    //categorie2();
+    //categorie3();
+    console.log("DOM ok");
     /** Instances each carrousel */
-    document.getElementById("title0").textContent  = "Films: le top du classement";
     new Carousel(document.getElementById("categorie_best_movies"), document.querySelector("#carousel_best_movies"), {
         slidesToScroll: 2
     });
-    // first category
-    document.getElementById("title1").textContent  = title_categorie_1[1];
+    
     new Carousel(document.getElementById("categorie1"), document.querySelector("#carousel_cat1"), {
         slidesToScroll: 2
     });
-    // second category
-    document.getElementById("title2").textContent  = title_categorie_4[1];
     new Carousel(document.getElementById("categorie2"), document.querySelector("#carousel_cat2"), {
         slidesToScroll: 2
     });
-    // three category
-    document.getElementById("title3").textContent  = title_categorie_5[1];
     new Carousel(document.getElementById("categorie3"), document.querySelector("#carousel_cat3"), {
         slidesToScroll: 2
     });
-    // modal window
     var myModal = document.querySelector("#myModal");
     var span = document.getElementsByClassName("close")[0];
     span.onclick = function() {
@@ -137,7 +127,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
 
 });
-
 
 
 /**
@@ -243,6 +232,93 @@ function bestMovieRecorded() {
         });
 }
 
+/**
+ * function that loads cat1
+ */
+
+function categorie1() {
+    fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=action&page_size=10&page=1')
+        .then(res => res.json())
+        .then(res => res.results)
+        .then(function(value) {
+            for (let i = 0; i < value.length; i++) {
+                let movie = value[i].image_url;
+                let name = value[i].id;
+                let movie_url = value[i].url;
+                let elt = document.getElementById("carousel_cat1");
+                let elt_item = document.createElement('div');
+                elt_item.setAttribute('class', 'carroussel_item');
+                elt.appendChild(elt_item);
+                let div = document.createElement('div');
+                div.setAttribute('id', name);
+                div.innerHTML = `<img src= ${movie} alt='caroussel'></img>`;
+                elt_item.appendChild(div);
+                let img = document.getElementById(`${name}`);
+                img.onclick = function() {
+                    myModal.style.display = "block";
+                    getMovieData(movie_url);
+                }
+            }
+        });
+}
+/**
+ * function that loads  cat 2
+ */
+
+function categorie2() {
+    fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Animation&page_size=10&page=1')
+        .then(res => res.json())
+        .then(res => res.results)
+        .then(function(value) {
+            for (let i = 0; i < value.length; i++) {
+                let movie = value[i].image_url;
+                let name = value[i].id;
+                let movie_url = value[i].url;
+                let elt = document.getElementById("carousel_cat2");
+                let elt_item = document.createElement('div');
+                elt_item.setAttribute('class', 'carroussel_item');
+                elt.appendChild(elt_item);
+                let div = document.createElement('div');
+                div.setAttribute('id', name);
+                div.innerHTML = `<img src= ${movie} alt='caroussel'></img>`;
+                elt_item.appendChild(div);
+                let img = document.getElementById(`${name}`);
+                img.onclick = function() {
+                    myModal.style.display = "block";
+                    getMovieData(movie_url);
+                }
+            }
+        });
+}
+/**
+ * function that loads  cat 3
+ */
+
+function categorie3() {
+    fetch('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Biography&page_size=10&page=1')
+        .then(res => res.json())
+        .then(res => res.results)
+        .then(function(value) {
+            for (let i = 0; i < value.length; i++) {
+                let movie = value[i].image_url;
+                let name = value[i].id;
+                let movie_url = value[i].url;
+                let elt = document.getElementById("carousel_cat3");
+                let elt_item = document.createElement('div');
+                elt_item.setAttribute('class', 'carroussel_item');
+                elt.appendChild(elt_item);
+                let div = document.createElement('div');
+                div.setAttribute('id', name);
+                div.innerHTML = `<img src= ${movie} alt='caroussel'></img>`;
+                elt_item.appendChild(div);
+                let img = document.getElementById(`${name}`);
+                img.onclick = function() {
+                    myModal.style.display = "block";
+                    getMovieData(movie_url);
+                }
+            }
+        });
+}
 // When the user clicks anywhere outside of the modal, close it
 // on sort du  mode , si on clic en dehors.
 window.onclick = function(event) {
