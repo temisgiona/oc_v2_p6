@@ -114,6 +114,30 @@ window.addEventListener("DOMContentLoaded", (event) => {
     new Carousel(document.getElementById("categorie_best_movies"), document.querySelector("#carousel_best_movies"), {
         slidesToScroll: 2
     });
+    // first category
+    document.getElementById("title1").textContent  = title_categorie_1[1];
+    new Carousel(document.getElementById("categorie1"), document.querySelector("#carousel_cat1"), {
+        slidesToScroll: 2
+    });
+    // second category
+    document.getElementById("title2").textContent  = title_categorie_4[1];
+    new Carousel(document.getElementById("categorie2"), document.querySelector("#carousel_cat2"), {
+        slidesToScroll: 2
+    });
+    // three category
+    document.getElementById("title3").textContent  = title_categorie_5[1];
+    new Carousel(document.getElementById("categorie3"), document.querySelector("#carousel_cat3"), {
+        slidesToScroll: 2
+    });
+    // modal window
+    var myModal = document.querySelector("#myModal");
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        myModal.style.display = "none";
+    }
+
+});
+
 
 
 /**
