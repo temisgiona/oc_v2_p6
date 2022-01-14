@@ -5,7 +5,7 @@ Avant de lancer la page accueil.html , il faut activer au préalable  :
 ```
 -- Api openclassroom : OCMovies-API-EN-FR> python manage.py runserver
 ```
-## **projet ** 
+## **projet: ** 
 
 ### Le projet comprend 3 sections : 
 
